@@ -2,9 +2,9 @@
 
 # OOP School Library
 > The librarian of OOP University needs a tool to record what books are in the library and who borrows them. This app allows him/her to:
-  > • Add new students or teachers.
-  > • Add new books.
-  > • Save records of who borrowed a given book and when.
+> * Add new students or teachers.
+> * Add new books.
+> * Save records of who borrowed a given book and when.
 
 ## Made With
 
