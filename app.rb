@@ -93,14 +93,10 @@ class App
     age = gets.chomp
     puts "Has parent\'s persmission? [Y/N]: "
     parent_permission = gets.chomp
-    if parent_permission == 'y' || 'Y' || 'n' || 'N'
-      parent_permission = true if parent_permission == ('y' || 'Y')
-      parent_permission = false if parent_permission == ('n' || 'N')
-      Student.new(age, name, parent_permission)
-      puts "Student (#{name}) has been created successfully"
-    else
-      puts 'Invalid input'
-    end
+    parent_permission = true if parent_permission == ('y' || 'Y')
+    parent_permission = false if parent_permission == ('n' || 'N')
+    Student.new(age, 'class', name, parent_permission: parent_permission)
+    puts "Student (#{name}) has been created successfully"
   end
 
   def create_teacher
