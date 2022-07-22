@@ -66,10 +66,8 @@ class App
     else
       puts 'People list:'
       people.each_with_index do |person, index|
-        puts "[Teacher #{index}] ID: #{person.id}
-        | Name: #{person.name} | Age: #{person.age} | Specialization #{person.specialization}" if person.is_a?(Teacher)
-        puts "[Student #{index}] ID: #{person.id}
-        | Name: #{person.name} | Age: #{person.age} | Classroom #{person.classroom}" if person.is_a?(Student)
+        puts "[Teacher #{index}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Teacher)
+        puts "[Student #{index}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Student)
       end
     end
   end
@@ -93,14 +91,16 @@ class App
     name = gets.chomp
     puts "Student\'s age: "
     age = gets.chomp
-    puts "Student\'s classroom: "
-    classroom = gets.chomp
     puts "Has parent\'s persmission? [Y/N]: "
     parent_permission = gets.chomp
-    parent_permission = true if parent_permission == ('y' || 'Y')
-    parent_permission = false if parent_permission == ('n' || 'N')
-    Student.new(age, classroom, name, parent_permission)
-    puts "Student (#{name}) has been created successfully"
+    if parent_permission == 'y' || 'Y' || 'n' || 'N'
+      parent_permission = true if parent_permission == ('y' || 'Y')
+      parent_permission = false if parent_permission == ('n' || 'N')
+      Student.new(age, name, parent_permission)
+      puts "Student (#{name}) has been created successfully"
+    else
+      puts 'Invalid input'
+    end
   end
 
   def create_teacher
@@ -129,7 +129,7 @@ class App
     if books.empty?
       puts 'Books list is empty, please create a book first'
     elsif people.empty?
-      puts 'People list is empty, please create a person first'
+      puts "People\'s list is empty, please create a person first"
     else
       puts 'Select a book from the following list by number'
       list_books
@@ -140,6 +140,7 @@ class App
       puts 'Date: '
       date = gets.chomp
       Rental.new(date, books[book_number], people[person_number])
+      puts 'Rental has been created successfully'
     end
   end
 
@@ -147,9 +148,13 @@ class App
     people = Person.class_variable_get(:@@people)
     puts "Person\'s ID: "
     input_id = gets.chomp.to_i
-    selected_person = people.select { |person| person.id = input_id }
-    selected_person[0].rentals.each do |rental|
-      puts "Date: #{rental.date} | Book: #{rental.book.title} By #{rental.book.author}"
+    selected_person = people.select { |person| person.id == input_id }
+    if selected_person.empty? || selected_person[0].rentals.empty?
+      puts "No rentals are found for (#{input_id})"
+    else
+      selected_person[0].rentals.each do |rental|
+        puts "Date: #{rental.date} | Book: #{rental.book.title} By #{rental.book.author}"
+      end
     end
   end
 end
