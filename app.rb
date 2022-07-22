@@ -53,7 +53,7 @@ class App
     else
       puts 'Books list:'
       books.each_with_index do |book, index|
-        puts "[Book #{index}] Title: #{book.title} | Author: #{book.author}"
+        puts "[Book #{index + 1}] Title: #{book.title} | Author: #{book.author}"
       end
     end
   end
@@ -66,8 +66,8 @@ class App
     else
       puts 'People list:'
       people.each_with_index do |person, index|
-        puts "[Teacher #{index}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Teacher)
-        puts "[Student #{index}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Student)
+        puts "[Teacher #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Teacher)
+        puts "[Student #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Student)
       end
     end
   end
@@ -135,7 +135,7 @@ class App
       person_number = gets.chomp.to_i
       puts 'Date: '
       date = gets.chomp
-      Rental.new(date, books[book_number], people[person_number])
+      Rental.new(date, books[book_number - 1], people[person_number - 1])
       puts 'Rental has been created successfully'
     end
   end
