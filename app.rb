@@ -66,8 +66,10 @@ class App
     else
       puts 'People list:'
       people.each_with_index do |person, index|
-        puts "[Teacher #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Teacher)
-        puts "[Student #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Student)
+        puts
+        "[Teacher #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Teacher)
+        puts
+        "[Student #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Student)
       end
     end
   end
