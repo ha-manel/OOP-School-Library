@@ -1,17 +1,22 @@
 require_relative 'nameable'
 
 class Person < Nameable
+  attr_accessor :name, :age, :rentals
+  attr_reader :id
+
+  # rubocop:disable Style/ClassVars
+  @@people = []
+  # rubocop:enable Style/ClassVars
+
   def initialize(age, name = 'unknown', parent_permission: true)
     super()
     @id = Random.rand(1..1000)
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @@people << self
     @rentals = []
   end
-
-  attr_accessor :name, :age
-  attr_reader :id
 
   def of_age?
     @age >= 18
@@ -27,7 +32,8 @@ class Person < Nameable
     @name
   end
 
-  def add_rental(rental)
+  def add_rental(book, date)
+    rental = Rental.new(date, book, self)
     @rentals << rental
   end
 end
