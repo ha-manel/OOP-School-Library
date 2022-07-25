@@ -22,7 +22,7 @@ class App
           5- Create a new rental entry
           6- List all rentals for a given person id
           7- Quit'
-      puts 'Choose an option: '
+      print 'Choose an option: '
       input = gets.chomp.to_i
 
       break if input == 7
@@ -57,7 +57,7 @@ class App
     else
       puts 'Books list:'
       @books.each_with_index do |book, index|
-        puts "[Book #{index + 1}] Title: #{book.title} | Author: #{book.author}"
+        puts "#{index + 1}-[Book] Title: #{book.title} | Author: #{book.author}"
       end
     end
   end
@@ -65,36 +65,36 @@ class App
   def list_people
     puts '-' * 50
     if @people.empty?
-      puts 'The list is empty'
+      puts "The people\'s list is empty"
     else
       puts 'People list:'
-      @people.each_with_index do |person, index|
-        puts "[Teacher #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Teacher)
-        puts "[Student #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Student)
+      @people.each_with_index do |per, i|
+        puts "#{i + 1}-[Teacher] ID: #{per.id} | Name: #{per.name} | Age: #{per.age}" if per.is_a?(Teacher)
+        puts "#{i + 1}-[Student] ID: #{per.id} | Name: #{per.name} | Age: #{per.age}" if per.is_a?(Student)
       end
     end
   end
 
   def create_person
     puts '-' * 50
-    puts 'Do you want to create a student (1) or a teacher (2)? [input the number]: '
-    input = gets.chomp.to_i
-    case input
+    print 'Do you want to create a student (1) or a teacher (2)? [input the number]: '
+    option = gets.chomp.to_i
+    print 'Name: '
+    name = gets.chomp
+    print 'Age: '
+    age = gets.chomp
+    case option
     when 1
-      create_student
+      create_student(name, age)
     when 2
-      create_teacher
+      create_teacher(name, age)
     else
-      puts 'Please input a valid number'
+      puts 'Please input a valid number (1 or 2)'
     end
   end
 
-  def create_student
-    puts "Student\'s name : "
-    name = gets.chomp
-    puts "Student\'s age: "
-    age = gets.chomp
-    puts "Has parent\'s persmission? [Y/N]: "
+  def create_student(name, age)
+    print "Has parent\'s persmission? [Y/N]: "
     parent_permission = gets.chomp
     parent_permission = true if parent_permission == ('y' || 'Y')
     parent_permission = false if parent_permission == ('n' || 'N')
@@ -102,21 +102,17 @@ class App
     puts "Student (#{name}) has been created successfully"
   end
 
-  def create_teacher
-    puts "Teacher\'s name : "
-    name = gets.chomp
-    puts "Teacher\'s age: "
-    age = gets.chomp
-    puts "Teacher\'s specialization: "
+  def create_teacher(name, age)
+    print "Teacher\'s specialization: "
     specialization = gets.chomp
     Teacher.new(age, specialization, name)
     puts "Teacher (#{name}) has been created successfully"
   end
 
   def create_book
-    puts "Book\'s title: "
+    print "Book\'s title: "
     title = gets.chomp
-    puts "Book\'s author: "
+    print "Book\'s author: "
     author = gets.chomp
     Book.new(title, author)
     puts "Book (#{title} By #{author}) has been created successfully"
@@ -134,7 +130,7 @@ class App
       puts 'Select a person from the following list by number'
       list_people
       person_number = gets.chomp.to_i
-      puts 'Date: '
+      print 'Date: '
       date = gets.chomp
       Rental.new(date, @books[book_number - 1], @people[person_number - 1])
       puts 'Rental has been created successfully'
@@ -142,7 +138,8 @@ class App
   end
 
   def list_rentals
-    puts "Person\'s ID: "
+    list_people
+    print "Person\'s ID: "
     input_id = gets.chomp.to_i
     selected_person = @people.select { |person| person.id == input_id }
     if selected_person.empty? || selected_person[0].rentals.empty?
