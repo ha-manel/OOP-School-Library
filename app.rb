@@ -10,6 +10,11 @@ class App
     @books = Book.class_variable_get(:@@books)
   end
 
+  def user_input(text)
+    print text
+    gets.chomp
+  end
+
   def run
     puts 'Welcome to School Library App!'
     loop do
@@ -22,8 +27,8 @@ class App
           5- Create a new rental entry
           6- List all rentals for a given person id
           7- Quit'
-      print 'Choose an option: '
-      input = gets.chomp.to_i
+
+      input = user_input('Choose an option: ').to_i
 
       break if input == 7
 
@@ -77,12 +82,9 @@ class App
 
   def create_person
     puts '-' * 50
-    print 'Do you want to create a student (1) or a teacher (2)? [input the number]: '
-    option = gets.chomp.to_i
-    print 'Name: '
-    name = gets.chomp
-    print 'Age: '
-    age = gets.chomp
+    option = user_input('Do you want to create a student (1) or a teacher (2)? [input the number]: ').to_i
+    name = user_input('Name: ')
+    age = user_input('Age: ')
     case option
     when 1
       create_student(name, age)
@@ -94,8 +96,7 @@ class App
   end
 
   def create_student(name, age)
-    print "Has parent\'s persmission? [Y/N]: "
-    parent_permission = gets.chomp
+    parent_permission = user_input("Has parent\'s persmission? [Y/N]: ")
     parent_permission = true if parent_permission == ('y' || 'Y')
     parent_permission = false if parent_permission == ('n' || 'N')
     Student.new(age, 'class', name, parent_permission: parent_permission)
@@ -103,17 +104,14 @@ class App
   end
 
   def create_teacher(name, age)
-    print "Teacher\'s specialization: "
-    specialization = gets.chomp
+    specialization = user_input("Teacher\'s specialization: ")
     Teacher.new(age, specialization, name)
     puts "Teacher (#{name}) has been created successfully"
   end
 
   def create_book
-    print "Book\'s title: "
-    title = gets.chomp
-    print "Book\'s author: "
-    author = gets.chomp
+    title = user_input("Book\'s title: ")
+    author = user_input("Book\'s author: ")
     Book.new(title, author)
     puts "Book (#{title} By #{author}) has been created successfully"
   end
@@ -124,14 +122,11 @@ class App
     elsif @people.empty?
       puts "People\'s list is empty, please create a person first"
     else
-      puts 'Select a book from the following list by number'
       list_books
-      book_number = gets.chomp.to_i
-      puts 'Select a person from the following list by number'
+      book_number = user_input('Select a book from the following list by number: ').to_i
       list_people
-      person_number = gets.chomp.to_i
-      print 'Date: '
-      date = gets.chomp
+      person_number = user_input('Select a person from the following list by number: ').to_i
+      date = user_input('Date: ')
       Rental.new(date, @books[book_number - 1], @people[person_number - 1])
       puts 'Rental has been created successfully'
     end
@@ -139,8 +134,7 @@ class App
 
   def list_rentals
     list_people
-    print "Person\'s ID: "
-    input_id = gets.chomp.to_i
+    input_id = user_input("Person\'s ID: ").to_i
     selected_person = @people.select { |person| person.id == input_id }
     if selected_person.empty? || selected_person[0].rentals.empty?
       puts "No rentals are found for (#{input_id})"
