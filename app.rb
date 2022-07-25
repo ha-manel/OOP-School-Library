@@ -5,6 +5,11 @@ require_relative 'teacher'
 require_relative 'rental'
 
 class App
+  def initialize
+    @people = Person.class_variable_get(:@@people)
+    @books = Book.class_variable_get(:@@books)
+  end
+
   def run
     puts 'Welcome to School Library App!'
     loop do
@@ -47,12 +52,11 @@ class App
 
   def list_books
     puts '-' * 50
-    books = Book.class_variable_get(:@@books)
-    if books.empty?
+    if @books.empty?
       puts 'The books list is empty'
     else
       puts 'Books list:'
-      books.each_with_index do |book, index|
+      @books.each_with_index do |book, index|
         puts "[Book #{index + 1}] Title: #{book.title} | Author: #{book.author}"
       end
     end
@@ -60,12 +64,11 @@ class App
 
   def list_people
     puts '-' * 50
-    people = Person.class_variable_get(:@@people)
-    if people.empty?
+    if @people.empty?
       puts 'The list is empty'
     else
       puts 'People list:'
-      people.each_with_index do |person, index|
+      @people.each_with_index do |person, index|
         puts "[Teacher #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Teacher)
         puts "[Student #{index + 1}] ID: #{person.id} | Name: #{person.name} | Age: #{person.age}" if person.is_a?(Student)
       end
@@ -120,11 +123,9 @@ class App
   end
 
   def create_rental
-    books = Book.class_variable_get(:@@books)
-    people = Person.class_variable_get(:@@people)
-    if books.empty?
+    if @books.empty?
       puts 'Books list is empty, please create a book first'
-    elsif people.empty?
+    elsif @people.empty?
       puts "People\'s list is empty, please create a person first"
     else
       puts 'Select a book from the following list by number'
@@ -135,16 +136,15 @@ class App
       person_number = gets.chomp.to_i
       puts 'Date: '
       date = gets.chomp
-      Rental.new(date, books[book_number - 1], people[person_number - 1])
+      Rental.new(date, @books[book_number - 1], @people[person_number - 1])
       puts 'Rental has been created successfully'
     end
   end
 
   def list_rentals
-    people = Person.class_variable_get(:@@people)
     puts "Person\'s ID: "
     input_id = gets.chomp.to_i
-    selected_person = people.select { |person| person.id == input_id }
+    selected_person = @people.select { |person| person.id == input_id }
     if selected_person.empty? || selected_person[0].rentals.empty?
       puts "No rentals are found for (#{input_id})"
     else
