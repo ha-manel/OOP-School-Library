@@ -1,10 +1,12 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
 # OOP School Library
+
 > The librarian of OOP University needs a tool to record what books are in the library and who borrows them. This app allows him/her to:
-> * Add new students or teachers.
-> * Add new books.
-> * Save records of who borrowed a given book and when.
+>
+> - Add new students or teachers.
+> - Add new books.
+> - Save records of who borrowed a given book and when.
 
 ## Made With
 
@@ -28,6 +30,10 @@ git clone git@github.com:ha-manel/OOP-School-Library.git
 - Twitter: [@hamanel](https://twitter.com/ha_manel_)
 - LinkedIn: [Manel Hammouche](https://www.linkedin.com/in/manel-hammouche/)
 
+👤 **Kanombola Kanombola**
+- GitHub: [@KanoCode](https://github.com/KanoCode)
+- Twitter: [@Kanombola_s](https://twitter.com/Kanombola_s)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/kanombola-kanombola/)
 
 ## 🤝 Contributing
 
