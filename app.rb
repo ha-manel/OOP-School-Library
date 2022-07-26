@@ -4,14 +4,16 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'rental'
 require_relative 'persist_books'
+require_relative 'persist_people'
 
 class App
   def initialize
-    @people = Person.class_variable_get(:@@people)
+    @people = load_people
     @books = load_books
   end
 
   include BooksPersistence
+  include PeoplePersistence
 
   def user_input(text)
     print text
@@ -38,6 +40,7 @@ class App
       operation(input)
     end
     store_books(@books)
+    store_people(@people)
   end
 
   def operation(input)
@@ -103,13 +106,13 @@ class App
     parent_permission = user_input("Has parent\'s persmission? [Y/N]: ")
     parent_permission = true if parent_permission == ('y' || 'Y')
     parent_permission = false if parent_permission == ('n' || 'N')
-    Student.new(age, 'class', name, parent_permission: parent_permission)
+    @people << Student.new(age, 'class', name, parent_permission: parent_permission)
     puts "Student (#{name}) has been created successfully"
   end
 
   def create_teacher(name, age)
     specialization = user_input("Teacher\'s specialization: ")
-    Teacher.new(age, specialization, name)
+    @people << Teacher.new(age, specialization, name)
     puts "Teacher (#{name}) has been created successfully"
   end
 
