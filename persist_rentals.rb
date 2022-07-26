@@ -3,7 +3,7 @@ require 'json'
 module RentalsPersistence
   def store_rentals(rentals)
     data = []
-    file = 'rentals.json'
+    file = './rentals.json'
     return unless File.exist?(file)
 
     rentals.each do |rental|
@@ -14,8 +14,8 @@ module RentalsPersistence
 
   def load_rentals
     data = []
-    file = 'rentals.json'
-    return unless File.exist?(file) && File.read(file) != ''
+    file = './rentals.json'
+    return data unless File.exist?(file) && File.read(file) != ''
 
     JSON.parse(File.read(file)).each do |rental|
       data << Rental.new(rental['date'], rental['book'], rental['person'])

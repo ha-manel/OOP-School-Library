@@ -3,7 +3,7 @@ require 'json'
 module BooksPersistence
   def store_books(books)
     data = []
-    file = 'books.json'
+    file = './books.json'
     return unless File.exist?(file)
 
     books.each do |book|
@@ -14,8 +14,8 @@ module BooksPersistence
 
   def load_books
     data = []
-    file = 'books.json'
-    return unless File.exist?(file) && File.read(file) != ''
+    file = './books.json'
+    return data unless File.exist?(file) && File.read(file) != ''
 
     JSON.parse(File.read(file)).each do |book|
       data << Book.new(book['title'], book['author'])
