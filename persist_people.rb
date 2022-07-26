@@ -22,9 +22,9 @@ module PeoplePersistence
         if File.exists?(file) && File.read(file) != ''
             JSON.parse(File.read(file)).each do |person|
                 if person.is_a?(Teacher)
-                    data << Teacher.new(person.age,person.specialization,person.name)
+                    data << Teacher.new(person['age'], person['specialization'], person['name'])
                 elsif person.is_a?(Student)
-                      data << Student.new( person.age, person.classroom, person.name, parent_permission: person.parent_permission)
+                    data << Student.new( person['age'], person['classroom'], person['name'], parent_permission: person['parent_permission'])
                 end
                 
             end
