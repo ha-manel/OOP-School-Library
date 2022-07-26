@@ -5,15 +5,18 @@ require_relative 'teacher'
 require_relative 'rental'
 require_relative 'persist_books'
 require_relative 'persist_people'
+require_relative 'persist_rentals'
 
 class App
   def initialize
     @people = load_people
     @books = load_books
+    @rentals = load_rentals
   end
 
   include BooksPersistence
   include PeoplePersistence
+  include RentalsPersistence
 
   def user_input(text)
     print text
@@ -41,6 +44,7 @@ class App
     end
     store_books(@books)
     store_people(@people)
+    store_rentals(@rentals)
   end
 
   def operation(input)
@@ -134,7 +138,7 @@ class App
       list_people
       person_number = user_input('Select a person from the following list by number: ').to_i
       date = user_input('Date: ')
-      Rental.new(date, @books[book_number - 1], @people[person_number - 1])
+      @rentals << Rental.new(date, @books[book_number - 1], @people[person_number - 1])
       puts 'Rental has been created successfully'
     end
   end
