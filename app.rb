@@ -3,12 +3,15 @@ require_relative 'person'
 require_relative 'student'
 require_relative 'teacher'
 require_relative 'rental'
+require_relative 'persist_books'
 
 class App
   def initialize
     @people = Person.class_variable_get(:@@people)
-    @books = Book.class_variable_get(:@@books)
+    @books = load_books
   end
+
+  include BooksPersistence
 
   def user_input(text)
     print text
@@ -34,6 +37,7 @@ class App
 
       operation(input)
     end
+    store_books(@books)
   end
 
   def operation(input)
@@ -112,7 +116,7 @@ class App
   def create_book
     title = user_input("Book\'s title: ")
     author = user_input("Book\'s author: ")
-    Book.new(title, author)
+    @books << Book.new(title, author)
     puts "Book (#{title} By #{author}) has been created successfully"
   end
 
