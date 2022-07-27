@@ -19,7 +19,7 @@ class Person < Nameable
 
   private :of_age?
 
-  def can_use_servies?
+  def can_use_services?
     @age >= 18 || @parent_permission
   end
 
